@@ -1,0 +1,58 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime;
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+Welcome to your new app.
+
+<button onclick="@OnInitClick">Init Value</button>
+<button onclick="@OnSetClick">Set Value</button>
+<button onclick="@OnShowClick">show Values</button>
+<input @bind="dbaddress"></input>
+<br />
+<span>
+    @allValues
+</span>
+@code {
+    public string dbaddress { get; set; }
+    public string allValues { get; set; }
+    int counter = 0;
+    IJSObjectReference db;
+    async void OnShowClick()
+    {
+        allValues = (await JSRuntime.InvokeAsync<object>("getAllValues", db)).ToString();
+        StateHasChanged();
+    }
+    async void OnSetClick()
+    {
+        await db.InvokeVoidAsync("add", "hello world!" + counter++);
+    }
+
+    async void OnInitClick()
+    {
+        try
+        {
+
+
+            var libp2p = await JSRuntime.InvokeAsync<IJSObjectReference>("createLibp2p");
+            var ipfs = await JSRuntime.InvokeAsync<IJSObjectReference>("createHelia", libp2p);
+            var orbitdb = await JSRuntime.InvokeAsync<IJSObjectReference>("createOrbitDB", ipfs);
+            if (string.IsNullOrWhiteSpace(dbaddress) == false)
+            {
+                db = await JSRuntime.InvokeAsync<IJSObjectReference>("openDB", orbitdb, dbaddress);
+
+            }
+            else
+            {
+                db = await JSRuntime.InvokeAsync<IJSObjectReference>("createDB", orbitdb, this.GetType().Name);
+            }
+            // db = await orbitdb.InvokeAsync<IJSObjectReference>("open", string.IsNullOrWhiteSpace(dbaddress) ? this.GetType().Name : dbaddress);
+            dbaddress = await JSRuntime.InvokeAsync<string>("getDbAddress", db);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+}
+<SurveyPrompt Title="How is Blazor working for you?" />

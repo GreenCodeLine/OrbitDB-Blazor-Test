@@ -1,0 +1,30 @@
+{
+  "name": "npmjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack ./src/index.js --output-path ../wwwroot/js --output-filename index.bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@chainsafe/libp2p-gossipsub": "^13.1.0",
+    "@chainsafe/libp2p-yamux": "^6.0.2",
+    "@libp2p/bootstrap": "^10.1.1",
+    "@libp2p/circuit-relay-v2": "^1.1.1",
+    "@libp2p/identify": "^2.1.1",
+    "@libp2p/webrtc-star": "^7.0.0",
+    "@libp2p/websockets": "^8.1.1",
+    "@orbitdb/core": "^2.2.0",
+    "blockstore-idb": "^1.1.8",
+    "helia": "^4.2.4",
+    "ipfs": "^0.66.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.6.0",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
