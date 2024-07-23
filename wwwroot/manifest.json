@@ -1,6 +1,6 @@
 {
-  "name": "Mc2.CrudTest.Presentation",
-  "short_name": "Mc2.CrudTest.Presentation",
+  "name": "OrbitDB.Blazor.Client",
+  "short_name": "O.B.C",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

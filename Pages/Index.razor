@@ -16,8 +16,8 @@ Welcome to your new app.
 @code {
     public string dbaddress { get; set; }
     public string allValues { get; set; }
-    int counter = 0;
-    IJSObjectReference db;
+    protected int counter = 0;
+    protected IJSObjectReference db;
     async void OnShowClick()
     {
         allValues = (await JSRuntime.InvokeAsync<object>("getAllValues", db)).ToString();
@@ -32,15 +32,12 @@ Welcome to your new app.
     {
         try
         {
-
-
             var libp2p = await JSRuntime.InvokeAsync<IJSObjectReference>("createLibp2p");
             var ipfs = await JSRuntime.InvokeAsync<IJSObjectReference>("createHelia", libp2p);
             var orbitdb = await JSRuntime.InvokeAsync<IJSObjectReference>("createOrbitDB", ipfs);
             if (string.IsNullOrWhiteSpace(dbaddress) == false)
             {
                 db = await JSRuntime.InvokeAsync<IJSObjectReference>("openDB", orbitdb, dbaddress);
-
             }
             else
             {
